@@ -1,14 +1,18 @@
-module Spree::ProductDecorator
-  def self.prepended(base)
-    base.after_destroy :touch_vendor
-  end
+# frozen_string_literal: true
 
-  Spree::Product.whitelisted_ransackable_associations += %w[vendor]
+module Spree
+  module ProductDecorator
+    def self.prepended(base)
+      base.after_destroy :touch_vendor
+    end
 
-  private
+    Spree::Product.whitelisted_ransackable_associations += %w[vendor]
 
-  def touch_vendor
-    vendor&.touch
+    private
+
+    def touch_vendor
+      vendor&.touch
+    end
   end
 end
 

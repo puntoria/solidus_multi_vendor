@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class VendorUser < Spree::Base
     belongs_to :vendor, class_name: 'Spree::Vendor'

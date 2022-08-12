@@ -1,8 +1,12 @@
-module Spree::AbilityDecorator
-  private
+# frozen_string_literal: true
 
-  def abilities_to_register
-    super << Spree::VendorAbility
+module Spree
+  module AbilityDecorator
+    private
+
+    def abilities_to_register
+      super << Spree::VendorAbility
+    end
   end
 end
 

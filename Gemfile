@@ -29,7 +29,6 @@ else
   gem 'rails_test_params_backport', group: :test
 end
 
-
 gemspec
 
 # Use a local Gemfile to include development dependencies that might not be

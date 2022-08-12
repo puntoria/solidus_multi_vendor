@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class OrderCommission < Base
     belongs_to :order, required: Spree.version.to_f >= 3.5

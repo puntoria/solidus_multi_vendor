@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Deface::Override.new(
   virtual_path: 'spree/admin/properties/index',
   name: 'remove_conditions',

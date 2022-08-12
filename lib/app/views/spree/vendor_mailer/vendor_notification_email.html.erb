@@ -2,10 +2,10 @@
   <tr>
     <td>
       <p class="lede">
-        <%= Spree.t('order_mailer.vendor_notification_email.dear_vendor') %>
+        <%= I18n.t('spree.order_mailer.vendor_notification_email.dear_vendor') %>
       </p>
       <p>
-        <%= Spree.t('order_mailer.vendor_notification_email.order_summary', number: @order.number) %>
+        <%= I18n.t('spree.order_mailer.vendor_notification_email.order_summary', number: @order.number) %>
       </p>
       <table class="container">
         <tr>
@@ -14,7 +14,7 @@
               <%= render collection: @line_items, partial: 'spree/shared/mailer_line_item', as: :line_item %>
               <tr>
                 <td class="six sub-columns">
-                  <%= Spree.t('order_mailer.subtotal') %>
+                  <%= I18n.t('spree.order_mailer.subtotal') %>
                 </td>
                 <td class="six sub-columns last right">
                   <%= Spree::Money.new(@subtotal, currency: @order.currency) %>
@@ -25,7 +25,7 @@
                   <% @order.all_adjustments.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
                     <tr>
                       <td class="six sub-columns">
-                        <%= Spree.t(:promotion) %> <%= label %>:
+                        <%= I18n.t('spree.promotion') %> <%= label %>:
                       </td>
                       <td class="six sub-columns last right">
                         <%= Spree::Money.new(adjustments.sum(&:amount), currency: @order.currency) %>
@@ -37,7 +37,7 @@
               <% @order.shipments.for_vendor(@vendor).group_by { |s| s.selected_shipping_rate.try(:name) }.each do |name, shipments| %>
                 <tr>
                   <td class="six sub-columns">
-                    <%= Spree.t(:shipping) %> <%= name %>:
+                    <%= I18n.t('spree.shipping') %> <%= name %>:
                   </td>
                   <td class="six sub-columns last right">
                     <%= Spree::Money.new(shipments.sum(&:discounted_cost), currency: @order.currency) %>
@@ -48,10 +48,10 @@
                 <% @order.all_adjustments.eligible.tax.group_by(&:label).each do |label, adjustments| %>
                   <tr>
                     <td class="six sub-columns">
-                      <%= Spree.t(:tax) %> <%= label %>:
+                      <%= I18n.t('spree.tax') %> <%= label %>:
                     </td>
                     <td class="six sub-columns last right">
-                      <%= Spree::Money.new(adjustments.sum(&:amount), currency: @order.currency) %>
+                      <%= I18n::Money.new(adjustments.sum(&:amount), currency: @order.currency) %>
                     </td>
                   </tr>
                 <% end %>
@@ -62,7 +62,7 @@
               <% end %>
               <tr>
                 <td class="six sub-columns">
-                  <strong><%= Spree.t('order_mailer.total') %></strong>
+                  <strong><%= I18n.t('spree.order_mailer.total') %></strong>
                 </td>
                 <td class="six sub-columns last right">
                   <strong><%= Spree::Money.new(@total, currency: @order.currency) %></strong>
@@ -73,7 +73,7 @@
         </tr>
       </table>
       <p>
-        <%= Spree.t('order_mailer.vendor_notification_email.thanks') %>
+        <%= I18n.t('spree.order_mailer.vendor_notification_email.thanks') %>
       </p>
     </td>
     <td class="expander"></td>

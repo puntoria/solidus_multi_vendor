@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <%= button_link_to Spree.t(:new_product), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_product' } %>
+  <%= button_to I18n.t('spree.new_product'), new_object_url, { class: "btn-success", icon: 'add', id: 'admin_new_product' } %>
 <% end if can?(:create, Spree::Product) %>
 
 <% content_for :table_filter do %>
@@ -13,20 +13,20 @@
       <div data-hook="admin_products_index_search" class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <%= f.label :name_cont, Spree.t(:name) %>
+            <%= f.label :name_cont, I18n.t('spree.name') %>
             <%= f.text_field :name_cont, size: 15, class: "form-control js-quick-search-target" %>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <%= f.label :variants_including_master_sku_cont, Spree.t(:sku) %>
+            <%= f.label :variants_including_master_sku_cont, I18n.t('spree.sku') %>
             <%= f.text_field :variants_including_master_sku_cont, size: 15, class: "form-control" %>
           </div>
         </div>
         <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
           <div class="col-md-6">
             <div class="form-group">
-              <%= f.label :vendor_name_cont, Spree.t(:vendor_name) %>
+              <%= f.label :vendor_name_cont, I18n.t('spree.vendor_name') %>
               <%= f.text_field :vendor_name_cont, class: "form-control" %>
             </div>
           </div>
@@ -35,20 +35,20 @@
           <div class="field checkbox">
             <label>
               <%= f.check_box :deleted_at_null, { checked: params[:q][:deleted_at_null] == '0' }, '0', '1' %>
-              <%= Spree.t(:show_deleted) %>
+              <%= I18n.t('spree.show_deleted') %>
             </label>
           </div>
 
           <div class="field checkbox">
             <label>
               <%= f.check_box :not_discontinued, { checked: params[:q][:not_discontinued] == '0' }, '0', '1' %>
-              <%= Spree.t(:show_discontinued ) %>
+              <%= I18n.t('spree.show_discontinued') %>
             </label>
           </div>
         </div>
       </div>
       <div data-hook="admin_products_index_search_buttons" class="form-actions">
-        <%= button Spree.t(:search), 'search' %>
+        <%= button I18n.t('spree.search'), 'search' %>
       </div>
     <% end %>
 
@@ -61,15 +61,15 @@
   <table class="table" id="listing_products">
     <thead>
       <tr data-hook="admin_products_index_headers">
-        <th><%= Spree.t(:sku) %></th>
-        <th><%= Spree.t(:status) %></th>
+        <th><%= I18n.t('spree.sku') %></th>
+        <th><%= I18n.t('spree.status') %></th>
 
-        <th colspan="2"><%= sort_link @search,:name, Spree.t(:name), { default_order: "desc" }, { title: 'admin_products_listing_name_title' } %></th>
+        <th colspan="2"><%= sort_link @search,:name, I18n.t('spree.name'), { default_order: "desc" }, { title: 'admin_products_listing_name_title' } %></th>
         <th class="text-center">
-          <%= sort_link @search, :master_default_price_amount, Spree.t(:master_price), {}, { title: 'admin_products_listing_price_title' } %>
+          <%= sort_link @search, :master_default_price_amount, I18n.t('spree.master_price'), {}, { title: 'admin_products_listing_price_title' } %>
         </th>
         <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) %>
-          <th><%= Spree.t(:vendor_name) %>
+          <th><%= I18n.t('spree.vendor_name') %>
         <% end %>
 
         <th data-hook="admin_products_index_header_actions" class="actions"></th>
@@ -97,8 +97,8 @@
   </table>
 <% else %>
   <div class="alert alert-info no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::Product)) %>,
-    <%= link_to Spree.t(:add_one), new_object_url %>!
+    <%= I18n.t('spree.no_resource_found', resource: plural_resource_name(Spree::Product)) %>,
+    <%= link_to I18n.t('spree.add_one'), new_object_url %>!
   </div>
 <% end %>
 

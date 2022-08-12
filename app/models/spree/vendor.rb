@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Vendor < Spree::Base
     acts_as_paranoid
@@ -31,6 +33,5 @@ module Spree
     def populate_state
       state ||= :pending
     end
-
   end
 end

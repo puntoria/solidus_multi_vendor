@@ -1,21 +1,29 @@
-module Spree::Api::V1::VariantsControllerDecorator
-  private
+# frozen_string_literal: true
 
-  def scope
-    variants = if @product
-                  @product.variants_including_master
-                else
-                  Spree::Variant
-                end
+module Spree
+  module Api
+    module V1
+      module VariantsControllerDecorator
+        private
 
-    if current_ability.can?(:manage, Spree::Variant) && params[:show_deleted]
-      variants = variants.with_deleted
+        def scope
+          variants = if @product
+                       @product.variants_including_master
+                     else
+                       Spree::Variant
+                     end
+
+          if current_ability.can?(:manage, Spree::Variant) && params[:show_deleted]
+            variants = variants.with_deleted
+          end
+
+          variants = variants.for_vendor_user(current_spree_user) unless @current_user_roles.include?('admin')
+          variants = variants.eligible if Spree.version.to_f >= 3.7
+
+          variants.accessible_by(current_ability, :read)
+        end
+      end
     end
-
-    variants = variants.for_vendor_user(current_spree_user) unless @current_user_roles.include?('admin')
-    variants = variants.eligible if Spree.version.to_f >= 3.7
-
-    variants.accessible_by(current_ability, :read)
   end
 end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class VendorImage < Asset
     include Spree::Image::Configuration::ActiveStorage

@@ -1,8 +1,14 @@
-module Spree::Admin::BaseControllerDecorator
-  Spree::Admin::BaseController.include(Spree::Admin::VendorHelper)
+# frozen_string_literal: true
 
-  def self.prepended(base)
-    base.helper_method :current_spree_vendor
+module Spree
+  module Admin
+    module BaseControllerDecorator
+      Spree::Admin::BaseController.include(Spree::Admin::VendorHelper)
+
+      def self.prepended(base)
+        base.helper_method :current_spree_vendor
+      end
+    end
   end
 end
 

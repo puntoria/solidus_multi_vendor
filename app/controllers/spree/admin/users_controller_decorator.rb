@@ -1,12 +1,18 @@
-module Spree::Admin::UsersControllerDecorator
-  private
+# frozen_string_literal: true
 
-  def user_params
-    params.require(:user).permit(permitted_user_attributes |
-                                 [spree_role_ids: [],
-                                  vendor_ids: [],
-                                  ship_address_attributes: permitted_address_attributes,
-                                  bill_address_attributes: permitted_address_attributes])
+module Spree
+  module Admin
+    module UsersControllerDecorator
+      private
+
+      def user_params
+        params.require(:user).permit(permitted_user_attributes |
+                                     [spree_role_ids: [],
+                                      vendor_ids: [],
+                                      ship_address_attributes: permitted_address_attributes,
+                                      bill_address_attributes: permitted_address_attributes])
+      end
+    end
   end
 end
 

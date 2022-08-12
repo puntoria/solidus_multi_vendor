@@ -21,15 +21,15 @@
 
         <div class="col-2">
           <div class="field">
-            <%= label_tag :q_state_eq, Spree.t(:state) %>
-            <%= f.select :state_eq, Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }, { include_blank: true }, class: 'select2 js-filterable fullwidth' %>
+            <%= label_tag :q_state_eq, I18n.t('spree.state') %>
+            <%= f.select :state_eq, Spree::Vendor.state_machines[:state].states.collect { |s| [I18n.t("spree.vendor_states.#{s.name}"), s.value] }, { include_blank: true }, class: 'select2 js-filterable fullwidth' %>
           </div>
         </div>
       </div>
 
       <div class="actions filter-actions">
         <div data-hook="admin_vendors_index_search_buttons">
-          <%= button_tag Spree.t(:filter_results), class: 'btn btn-primary' %>
+          <%= button_tag I18n.t('spree.filter_results'), class: 'btn btn-primary' %>
         </div>
       </div>
     <% end %>
@@ -41,13 +41,13 @@
     <thead>
       <tr data-hook="vendors_header">
         <th>
-          <%= sort_link @search, :name, I18n.t(:name, scope: 'activerecord.attributes.spree/vendor') %>
+          <%= sort_link @search, :name, I18n.t('spree.activerecord.attributes.vendor.name') %>
         </th>
         <th>
-          <%= sort_link @search, :state, I18n.t(:state, scope: 'activerecord.attributes.spree/vendor') %>
+          <%= sort_link @search, :state, I18n.t('spree.activerecord.attributes.vendor.state') %>
         </th>
         <th>
-          <%= sort_link @search, :created_at, I18n.t(:created_at, scope: 'activerecord.attributes.spree/vendor') %>
+          <%= sort_link @search, :created_at, I18n.t('spree.activerecord.attributes.vendor.created_at') %>
         </th>
         </th>
         <th class="actions"></th>

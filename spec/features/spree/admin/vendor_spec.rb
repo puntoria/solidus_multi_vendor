@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-RSpec.feature 'Admin Vendors', :js do
+RSpec.describe 'Admin Vendors', :js do
   let!(:admin) { create(:admin_user) }
 
-  background do
+  before do
     login_as(admin, scope: :spree_user)
     create(:vendor, name: 'My vendor')
     visit spree.admin_vendors_path
   end
 
   context 'index' do
-    scenario 'displays existing vendors' do
+    it 'displays existing vendors' do
       within("table.table tbody tr:nth-of-type(1)") do
         expect(column_text(1)).to eq 'My vendor'
         expect(column_text(2)).to eq 'pending'
@@ -19,7 +19,7 @@ RSpec.feature 'Admin Vendors', :js do
   end
 
   context 'create' do
-    scenario 'can create a new vendor' do
+    it 'can create a new vendor' do
       click_link 'New Vendor'
       expect(page).to have_current_path(spree.new_admin_vendor_path)
 
@@ -32,7 +32,7 @@ RSpec.feature 'Admin Vendors', :js do
       expect(page).to have_current_path(spree.admin_vendors_path)
     end
 
-    scenario 'shows validation error with blank name' do
+    it 'shows validation error with blank name' do
       click_link 'New Vendor'
       expect(page).to have_current_path(spree.new_admin_vendor_path)
 
@@ -42,7 +42,7 @@ RSpec.feature 'Admin Vendors', :js do
       expect(page).to have_text 'Name can\'t be blank'
     end
 
-    scenario 'shows validation error with repeated name' do
+    it 'shows validation error with repeated name' do
       click_link 'New Vendor'
       expect(page).to have_current_path(spree.new_admin_vendor_path)
 
@@ -54,25 +54,25 @@ RSpec.feature 'Admin Vendors', :js do
   end
 
   context 'edit' do
-    background do
+    before do
       within("table.table tbody tr:nth-of-type(1)") { click_icon :edit }
-        expect(page).to have_current_path(spree.edit_admin_vendor_path(1))
+      expect(page).to have_current_path(spree.edit_admin_vendor_path(1))
     end
 
-    scenario 'can update an existing vendor' do
+    it 'can update an existing vendor' do
       fill_in 'vendor_name', with: 'Testing edit'
       click_button 'Update'
       expect(page).to have_text 'successfully updated!'
       expect(page).to have_text 'Testing edit'
     end
 
-    scenario 'shows validation error with blank name' do
+    it 'shows validation error with blank name' do
       fill_in 'vendor_name', with: ''
       click_button 'Update'
       expect(page).to have_text 'Name can\'t be blank'
     end
 
-    scenario 'shows validation error with repeated name' do
+    it 'shows validation error with repeated name' do
       create(:vendor, name: 'New vendor')
 
       fill_in 'vendor_name', with: 'New vendor'

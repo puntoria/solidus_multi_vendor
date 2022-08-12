@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <%= button_link_to Spree.t(:new_property), new_object_url, { class: "btn-success", icon: 'add', 'data-update' => 'new_property', id: 'new_property_link' } %>
+  <%= button_to I18n.t('spree.new_property'), new_object_url, { class: "btn-success", icon: 'add', 'data-update' => 'new_property', id: 'new_property_link' } %>
 <% end %>
 
 <% content_for :table_filter do %>
@@ -15,14 +15,14 @@
       <div class="row">
         <div class="col col-md-6">
           <div data-hook="admin_property_index_search" class="form-group">
-            <%= f.label :name_cont, Spree.t(:name) %>
+            <%= f.label :name_cont, I18n.t('spree.name') %>
             <%= f.text_field :name_cont, class: "form-control js-quick-search-target" %>
           </div>
         </div>
 
         <div class="col-md-6">
           <div class="form-group">
-            <%= f.label :presentation_cont, Spree.t(:presentation) %>
+            <%= f.label :presentation_cont, I18n.t('spree.presentation') %>
             <%= f.text_field :presentation_cont, class: "form-control" %>
           </div>
         </div>
@@ -32,7 +32,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <%= f.label :vendor_name_cont, Spree.t(:vendor_name) %>
+              <%= f.label :vendor_name_cont, I18n.t('spree.vendor_name') %>
               <%= f.text_field :vendor_name_cont, class: "form-control" %>
             </div>
           </div>
@@ -40,7 +40,7 @@
       <% end %>
 
       <div class="form-actions" data-hook="admin_pproperties_index_search_buttons">
-        <%= button Spree.t(:search), 'search' %>
+        <%= button I18n.t('spree.search'), 'search' %>
       </div>
 
     <% end %>
@@ -51,10 +51,10 @@
   <table class="table" id='listing_properties' data-hook>
     <thead>
       <tr data-hook="listing_properties_header">
-        <th><%= Spree.t(:name) %></th>
-        <th><%= Spree.t(:presentation) %></th>
+        <th><%= I18n.t('spree.name') %></th>
+        <th><%= I18n.t('spree.presentation') %></th>
         <% if current_spree_user.respond_to?(:has_spree_role?) && current_spree_user.has_spree_role?(:admin) && Spree::Property.method_defined?(:vendor) %>
-          <th><%= Spree.t(:vendor_name) %></th>
+          <th><%= I18n.t('spree.vendor_name') %></th>
         <% end %>
         <th class="actions"></th>
       </tr>
@@ -77,8 +77,8 @@
   </table>
 <% else %>
   <div class="alert alert-info no-objects-found">
-    <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::Property)) %>,
-    <%= link_to Spree.t(:add_one), new_object_url %>!
+    <%= I18n.t('spree.no_resource_found', resource: plural_resource_name(Spree::Property)) %>,
+    <%= link_to I18n.t('spree.add_one'), new_object_url %>!
   </div>
 <% end %>
 

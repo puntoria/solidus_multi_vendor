@@ -39,9 +39,9 @@
       <% end %>
     </div>
     <div class="form-actions" data-hook="buttons">
-      <%= button Spree.t('actions.update'), 'save' %>
-      <span class="or"><%= Spree.t(:or) %></span>
-      <%= button_link_to Spree.t('actions.cancel'), admin_vendor_settings_url, icon: 'delete' %>
+      <%= button I18n.t('spree.actions.update'), 'save' %>
+      <span class="or"><%= I18n.t('spree.or') %></span>
+      <%= button_to I18n.t('spree.actions.cancel'), admin_vendor_settings_url, icon: 'delete' %>
     </div>
   </fieldset>
 <% end %>

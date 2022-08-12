@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :vendor, class: Spree::Vendor do
+  factory :vendor, class: 'Spree::Vendor' do
     name { 'Test vendor' }
 
     factory :active_vendor do

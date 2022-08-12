@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Spree
   module Admin
     class VendorsController < ResourceController
-
       def create
         if permitted_resource_params[:image] && Spree.version.to_f >= 3.6
           @vendor.build_image(attachment: permitted_resource_params.delete(:image))
@@ -40,8 +41,8 @@ module Spree
         @search = vendors.ransack(params[:q])
 
         @collection = @search.result.
-            page(params[:page]).
-            per(params[:per_page])
+                      page(params[:page]).
+                      per(params[:per_page])
       end
 
       def format_translations
