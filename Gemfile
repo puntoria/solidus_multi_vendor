@@ -12,6 +12,7 @@ gem 'solidus', github: 'solidusio/solidus', branch: branch
 gem 'rails', '>0.a'
 
 # Provides basic authentication functionality for testing parts of your engine
+gem 'acts_as_list'
 gem 'solidus_auth_devise'
 
 case ENV['DB']
@@ -28,7 +29,6 @@ if branch == 'master' || branch >= 'v2.0'
 else
   gem 'rails_test_params_backport', group: :test
 end
-
 
 gemspec
 

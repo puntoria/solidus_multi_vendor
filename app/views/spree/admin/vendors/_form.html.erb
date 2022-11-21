@@ -1,17 +1,48 @@
-<div data-hook="admin_vendor_form_fields" class="row">
-  <div class="col-4">
-    <%= f.field_container :name do %>
-      <%= f.label :name %>
-      <%= f.text_field :name, class: 'fullwidth' %>
-    <% end %>
-  </div>
+<%= render partial: 'spree/shared/error_messages', locals: { target: @vendor } %>
+<fieldset class="form-group no-border-bottom no-border-top">
+  <div class="row">
+    <div id="general_fields" class="col-9">
+      <div class="row">
+        <div class="col-12">
+          <%= f.field_container :name do %>
+            <%= f.label :name %>
+            <%= f.text_field :name, class: 'form-control' %>
+          <% end %>
 
-  <div class="col-2">
-    <%= f.field_container :state do %>
-      <%= f.label :state %>
-      <%= f.select :state,
-        options_for_select(Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }, selected: @vendor.state),
-        {}, class: "select2 fullwidth" %>
-    <% end %>
-  </div>
-</div>
+          <%= f.field_container :about_us do %>
+            <%= f.label :about_us %>
+            <%= f.text_area :about_us, class: 'form-control' %>
+          <% end %>
+
+          <%= f.field_container :contact_us do %>
+            <%= f.label :contact_us %>
+            <%= f.text_area :contact_us, class: 'form-control' %>
+          <% end %>
+
+          <%= f.field_container :state do %>
+            <%= f.label :state %>
+            <%= f.select :state,
+              options_for_select(Spree::Vendor.state_machines[:state].states.collect { |s| [I18n.t("spree.vendor_states.#{s.name}"), s.value] }, selected: @vendor.state),
+              {}, class: 'select2', required: :required %>
+          <% end %>
+
+          <%= f.field_container :image do %>
+            <%= f.label :image %>
+            <%= f.file_field :image %>
+            <%= image_tag main_app.url_for(@vendor.image.url(:small)) if @vendor.image %>
+          <% end %>
+
+          <%= f.field_container :commission_rate do %>
+            <%= f.label :commission_rate %>
+            <%= f.number_field :commission_rate, step: '0.01', class: 'form-control' %>
+          <% end %>
+
+          <%= f.field_container :notification_email do%>
+            <%= f.label :notification_email %>
+            <%= f.email_field :notification_email, class: 'form-control' %>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+</fieldset>

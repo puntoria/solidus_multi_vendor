@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Admin
     module VendorHelper
@@ -5,6 +7,12 @@ module Spree
         if current_spree_user.vendors.any? && (!current_spree_user.respond_to?(:has_spree_role?) || !current_spree_user.has_spree_role?(:admin))
           current_spree_user.vendors.first
         end
+      end
+
+      def vendor_state_options
+        @vendor_state_options ||= Spree::Vendor.state_machines[:state].states.collect { |s|
+          [I18n.t("spree.vendor_states.#{s.name}"), s.value]
+        }
       end
     end
   end

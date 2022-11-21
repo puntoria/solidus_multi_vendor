@@ -1,3 +1,0 @@
-<!-- insert_before "td.actions" -->
-
-<td><%= store&.vendor&.name %></td>

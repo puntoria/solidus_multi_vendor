@@ -1,0 +1,21 @@
+<% content_for :page_title do %>
+  <%= I18n.t('spree.editing_resource', resource: Spree::Vendor.model_name.human) %>
+<% end %>
+
+<%= render 'settings' %>
+
+<div class="row translations">
+  <div class="col-md-4">
+    <%= render 'fields' %>
+  </div>
+  <div class="col-md-8">
+    <%= form_for [:admin, @resource.id, @resource], url: spree.admin_vendor_path(@vendor.id) do |f| %>
+      <%= render 'form_fields', f: f %>
+      <div class="form-actions" data-hook="buttons">
+        <%= button I18n.t('spree.update'), 'update' %>
+        <span class="or"><%= I18n.t('spree.or') %></span>
+        <%= button_to I18n.t('spree.cancel'), spree.edit_admin_vendor_url(@vendor.id), icon: 'remove' %>
+      </div>
+    <% end %>
+  </div>
+</div>

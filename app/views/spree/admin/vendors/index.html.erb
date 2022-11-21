@@ -1,35 +1,35 @@
-<% admin_layout "full-width" %>
-
-<% admin_breadcrumb(plural_resource_name(Spree::Vendor)) %>
+<% content_for :page_title do %>
+  <%= plural_resource_name(Spree::Vendor) %>
+<% end %>
 
 <% content_for :page_actions do %>
-  <li>
-    <%= link_to t("spree.new_vendor"), new_object_url, class: "btn btn-primary" %>
-  </li>
+  <%= link_to t("spree.new_vendor"), new_object_url, class: "btn btn-primary", id: "admin_new_vendor" %>
 <% end if can?(:create, Spree::Vendor) %>
+
+<% content_for :table_filter_title do %>
+  <%= t('spree.vendor') %>
+<% end %>
 
 <% content_for :table_filter do %>
   <div data-hook="admin_vendors_index_search">
     <%= search_form_for [:admin, @search] do |f| %>
       <div class="row">
-        <div class="col-3">
-          <div class="field">
-            <%= f.label :name_cont, Spree::Vendor.human_attribute_name(:name) %>
-            <%= f.text_field :name_cont, tabindex: 1, class: "fullwidth js-quick-search-target" %>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= label_tag :q_name_cont, I18n.t('spree.name') %>
+            <%= f.text_field :name_cont, tabindex: 1, class: "form-control js-quick-search-target" %>
           </div>
         </div>
-
-        <div class="col-2">
-          <div class="field">
-            <%= label_tag :q_state_eq, Spree.t(:state) %>
-            <%= f.select :state_eq, Spree::Vendor.state_machines[:state].states.collect { |s| [Spree.t("vendor_states.#{s.name}"), s.value] }, { include_blank: true }, class: 'select2 js-filterable fullwidth' %>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= label_tag :q_state_in, I18n.t('spree.state') %>
+            <%= f.select :state_in, options_for_select(Spree::Vendor.state_machines[:state].states.collect { |s| [I18n.t("spree.vendor_states.#{s.name}"), s.value] }), { multiple: 'please select' }, class: 'form-control' %>
           </div>
         </div>
       </div>
-
       <div class="actions filter-actions">
         <div data-hook="admin_vendors_index_search_buttons">
-          <%= button_tag Spree.t(:filter_results), class: 'btn btn-primary' %>
+          <%= button_tag I18n.t('spree.filter_results'), class: 'btn btn-primary' %>
         </div>
       </div>
     <% end %>
@@ -37,25 +37,27 @@
 <% end %>
 
 <% if @vendors.any? %>
-  <table class="table">
+  <table class="table sortable" data-hook="vendors_table" data-sortable-link="<%= update_positions_admin_vendors_url %>">
     <thead>
       <tr data-hook="vendors_header">
         <th>
-          <%= sort_link @search, :name, I18n.t(:name, scope: 'activerecord.attributes.spree/vendor') %>
+          <%= I18n.t('spree.user') %>
         </th>
         <th>
-          <%= sort_link @search, :state, I18n.t(:state, scope: 'activerecord.attributes.spree/vendor') %>
+          <%= sort_link @search, :name, I18n.t('spree.activerecord.attributes.vendor.name') %>
         </th>
         <th>
-          <%= sort_link @search, :created_at, I18n.t(:created_at, scope: 'activerecord.attributes.spree/vendor') %>
-        </th>
+          <%= sort_link @search, :state, I18n.t('spree.activerecord.attributes.vendor.state') %>
         </th>
         <th class="actions"></th>
       </tr>
     </thead>
     <tbody>
       <% @vendors.each do |vendor| %>
-        <tr>
+        <tr id="<%= spree_dom_id vendor %>" data-hook="vendors_row">
+          <td>
+            <%= vendor.users.first.email rescue nil %>
+          </td>
           <td>
             <%= vendor.name %>
           </td>
@@ -63,16 +65,14 @@
             <span class="label label-<%= vendor.state.downcase %>"><%= vendor.state.humanize.downcase %></span>
             <span class="icon icon-filter filterable js-add-filter" data-ransack-field="q_state_eq" data-ransack-value="<%= vendor.state %>"></span>
           </td>
-          <td>
-            <%= pretty_time(vendor.created_at) %>
-          </td>
-          <td class="actions">
-            <% if can?(:update, vendor) %>
-              <%= link_to_edit(vendor, no_text: true) %>
-            <% end %>
-            <% if can?(:destroy, vendor) %>
-              <%= link_to_delete(vendor, no_text: true) %>
-            <% end %>
+          <td class="actions actions-2 text-right">
+            <%= link_to_edit vendor, no_text: true, class: 'edit' if can?(:edit, vendor) %>
+            <!-- Add translation icon support -->
+            <%= link_to_with_icon 'translate',
+                                  nil,
+                                  spree.admin_translations_path('vendor', vendor.id),
+                                  title: I18n.t('spree.i18n.translations'),
+                                  class: 'btn btn-sm btn-primary' if defined? (SpreeGlobalize)%>
           </td>
         </tr>
       <% end %>

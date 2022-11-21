@@ -1,3 +1,0 @@
-<!-- insert_before "th.actions" -->
-
-<th><%= Spree.t(:vendor_name) %></th>
